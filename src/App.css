@@ -1,0 +1,17 @@
+.custom-posts-button {
+  outline: none;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  background-color: #999;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.custom-posts-button:hover {
+  background-color: rgb(171, 169, 169);
+}
+
+.custom-posts-button.active {
+  background-color: #666;
+}
