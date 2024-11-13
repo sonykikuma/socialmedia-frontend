@@ -184,12 +184,14 @@ const Post = ({ post }) => {
             style={{ textDecoration: "none", color: "#222", gap: "8px" }}
           >
             <img
-              // src={post?.user?.profileImg ? post?.user?.profileImg : female}
-              src={post?.user?.profileImg || female}
+              src={post?.user?.profileImg ? post?.user?.profileImg : female}
+              //src={post?.user?.profileImg || female}
               alt=""
               className="border rounded-circle"
               style={{ width: "40px", height: "40px", objectFit: "cover" }}
             />
+            {/* <p>Profile Image URL: {post?.user?.profileImg}</p> just to test if image url is coming or not */}
+
             <div className="d-flex flex-column">
               <span style={{ fontSize: "18px", fontWeight: "500" }}>
                 {capitalizeFirstLetter(post.user.username)}
@@ -438,7 +440,7 @@ const Post = ({ post }) => {
                 }}
                 placeholder="Comment here..."
               />
-              {commentText}
+              {/* {commentText} */}
               <button className="text-primary " onClick={handlePostComment}>
                 Post
               </button>

@@ -92,12 +92,7 @@ const ProfileDetails = () => {
           <div className="d-flex align-items-center" style={{ gap: "2.5rem" }}>
             <div style={{ width: "70px", height: "70px" }}>
               <img
-                src={
-                  profile?.profileImg
-                    ? profile?.profileImg
-                    : //`https://backend-social3.vercel.app/images/${profile?.profileImg}`
-                      female
-                }
+                src={profile?.profileImg ? profile?.profileImg : female}
                 className="border rounded-circle"
                 style={{ width: "70px", height: "70px", objectFit: "cover" }}
               />

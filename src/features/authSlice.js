@@ -1,9 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   user: null,
   token: null,
+  status: "idle",
+  error: null,
+  profile: null,
+  profilePosts: [],
+  isFollowed: false,
 };
+
+export const fetchProfileById = createAsyncThunk(
+  "auth/fetchProfileById",
+  async (id, { rejectWithValue, getState }) => {
+    try {
+      console.log("Fetching profile for ID:", id);
+      if (!id) throw new Error("Invalid user ID");
+      const token = getState().auth.token;
+
+      const response = await axios.get(
+        `https://backend-social3.vercel.app/user/find/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -51,6 +81,21 @@ export const authSlice = createSlice({
     updateUser(state, action) {
       state.user = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProfileById.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(fetchProfileById.fulfilled, (state, action) => {
+        state.status = "success";
+        state.user = action.payload;
+      })
+      .addCase(fetchProfileById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
   },
 });
 

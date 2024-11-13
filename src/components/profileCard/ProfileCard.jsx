@@ -64,6 +64,7 @@ const ProfileCard = () => {
 
         <Link
           to={`/profileDetails/${user?._id}`}
+          //to={`/mypost/${user?.id}`}
           style={{ textDecoration: "none" }}
         >
           <h3
