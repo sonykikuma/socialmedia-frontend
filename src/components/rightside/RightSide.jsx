@@ -19,7 +19,7 @@ const RightSide = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `https://backend-social3.vercel.app/user/find/friends`,
+          "https://backend-social3.vercel.app/user/find/friends",
           {
             headers: {
               Authorization: `Bearer ${token}`,

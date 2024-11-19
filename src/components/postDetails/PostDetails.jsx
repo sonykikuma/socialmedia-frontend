@@ -120,7 +120,7 @@ const PostDetails = () => {
                 <img
                   className="rounded-circle"
                   style={{ height: "55px", width: "55px", objectFit: "cover" }}
-                  src={female}
+                  src={post?.user?.profileImg || female}
                   alt=""
                 />
                 <div className="d-flex flex-column" style={{ gap: "8px" }}>

@@ -44,7 +44,7 @@ const Comment = ({ c }) => {
     >
       <div className="d-flex align-items-center" style={{ gap: "0.5rem" }}>
         <img
-          src={female}
+          src={comment?.user?.profileImg || female}
           alt=""
           className="rounded-circle"
           style={{ width: "36px", height: "36px", objectFit: "cover" }}
@@ -59,17 +59,7 @@ const Comment = ({ c }) => {
             {format(comment?.createdAt)}
           </span>
         </div>
-        <div
-        // style={{
-        //   alignSelf: "flex-start",
-        //   fontSize: "15px",
-        //   color: "222",
-        //   width: "75%",
-        //   wordWrap: "break-word",
-        // }}
-        >
-          {comment?.commentText}
-        </div>
+        <div>{comment?.commentText}</div>
       </div>
       <div
         className="d-flex flex-column align-items-center"

@@ -32,7 +32,7 @@ const SignUp = () => {
       if (res.ok) {
         console.log("Registration successful!");
         // dispatch(register(data));
-        navigate("/login");
+        navigate("/");
       } else {
         console.log("Registration failed!");
 
@@ -88,7 +88,7 @@ const SignUp = () => {
             </button>
             <p className="mt-4">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary fw-bold">
+              <Link to="/" className="text-primary fw-bold">
                 Login
               </Link>
             </p>

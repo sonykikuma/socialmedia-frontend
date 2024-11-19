@@ -26,7 +26,7 @@ const Login = () => {
       const data = await res.json();
       console.log(data);
       dispatch(login(data));
-      navigate("/");
+      navigate("/user");
     } catch (error) {
       setError(true);
       setTimeout(() => {

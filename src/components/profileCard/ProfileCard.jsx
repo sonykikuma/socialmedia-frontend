@@ -83,6 +83,9 @@ const ProfileCard = () => {
         <Link to={`/bookmarks/${user?._id}`} style={{ textDecoration: "none" }}>
           Bookmarks
         </Link>
+        <Link to={`/mypost/${user?._id}`} style={{ textDecoration: "none" }}>
+          myposts
+        </Link>
       </div>
       <div className=" mt-4">
         <div

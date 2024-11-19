@@ -68,7 +68,7 @@ const Upload = () => {
 
       const data = await res.json();
       console.log(data);
-      navigate("/");
+      navigate("/user");
     } catch (error) {
       console.log(error);
     }

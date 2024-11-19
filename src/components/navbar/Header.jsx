@@ -13,7 +13,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -21,9 +21,14 @@ const Header = () => {
       <header>
         <nav className="navbar navbar-expand-lg">
           <div className="container">
-            <NavLink to="/" className="navbar-brand fw-bold text-primary">
-              MyWebsite
-            </NavLink>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={<Tooltip id="tooltip-bottom">Homepage </Tooltip>}
+            >
+              <NavLink to="/user" className="navbar-brand fw-bold text-primary">
+                MyWebsite
+              </NavLink>
+            </OverlayTrigger>
             <button
               className="navbar-toggler"
               type="button"
@@ -44,17 +49,17 @@ const Header = () => {
                 style={{ gap: "8px" }}
               >
                 {/* {tooltip testing} */}
-                <NavLink to="/">
+                <NavLink to="/user">
                   {" "}
                   <OverlayTrigger
-                    placement="bottom" // You can choose top, left, right, bottom
+                    placement="bottom"
                     overlay={<Tooltip id="tooltip-bottom">Homepage </Tooltip>}
                   >
                     <span className="">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
+                        width="30"
+                        height="30"
                         fill="currentColor"
                         className="bi bi-person"
                         viewBox="0 0 16 16"
@@ -68,7 +73,7 @@ const Header = () => {
                   </OverlayTrigger>
                 </NavLink>{" "}
                 <OverlayTrigger
-                  placement="bottom" // You can choose top, left, right, bottom
+                  placement="bottom"
                   overlay={
                     <Tooltip id="tooltip-bottom" className="text-primary">
                       Logout{" "}
@@ -78,10 +83,10 @@ const Header = () => {
                   <span className="" onClick={handleLogout}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
+                      width="30"
+                      height="30"
                       fill="currentColor"
-                      className="bi bi-box-arrow-right"
+                      className="bi bi-box-arrow-right text-primary"
                       viewBox="0 0 16 16"
                     >
                       <path
@@ -98,13 +103,12 @@ const Header = () => {
                 <NavLink to="/updateprofile">
                   <OverlayTrigger
                     className="bg-primary"
-                    placement="bottom" // You can choose top, left, right, bottom
+                    placement="bottom"
                     overlay={
                       <Tooltip id="tooltip-bottom">Update Profile </Tooltip>
                     }
                   >
                     <img
-                      // src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200"
                       src={user?.profileImg ? user?.profileImg : female}
                       alt="female"
                       className="rounded-circle "
@@ -128,8 +132,3 @@ const Header = () => {
 };
 
 export default Header;
-
-{
-  /*
-   */
-}

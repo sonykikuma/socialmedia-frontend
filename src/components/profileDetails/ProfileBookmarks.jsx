@@ -5,6 +5,8 @@ import { handleFollow } from "../../features/authSlice";
 import Header from "../navbar/Header";
 import axios from "axios";
 import Post from "../post/Post";
+import ProfileCard from "../profileCard/ProfileCard";
+import RightSide from "../rightside/RightSide";
 
 const ProfileBookmarks = () => {
   const [profile, setProfile] = useState("");
@@ -30,6 +32,8 @@ const ProfileBookmarks = () => {
           }
         );
         const data = await res.json();
+        // console.log("Fetched profile data:", data);
+
         setProfile(data);
 
         if (user?._id !== data?._id) {
@@ -49,6 +53,7 @@ const ProfileBookmarks = () => {
           `https://backend-social3.vercel.app/post/find/userposts/${id}`
         );
         const data = await res.json();
+
         setProfilePosts(data);
       } catch (error) {
         console.log(error);
@@ -87,108 +92,108 @@ const ProfileBookmarks = () => {
     <>
       <Header />
       <div className="container mt-4">
-        <div className="d-flex flex-column align-items-center mt-3">
-          <div className="d-flex align-items-center" style={{ gap: "2.5rem" }}>
-            <div style={{ width: "70px", height: "70px" }}>
-              <img
-                src={profile?.profileImg ? profile?.profileImg : female}
-                className="border rounded-circle"
-                style={{ width: "70px", height: "70px", objectFit: "cover" }}
-              />
-            </div>
-            <div className="d-flex flex-column" style={{ gap: "12px" }}>
-              <h4
-                style={{
-                  textTransform: "capitalize",
-                  fontSize: "26px",
-                  color: "#333",
-                  fontWeight: "bold",
-                }}
-              >
-                {profile?.username}
-              </h4>
-              <h4 style={{ fontWeight: "500", color: "#666" }}>
-                Bio: {profile?.desc ? profile.desc : "Live Love Laugh"}
-              </h4>
-            </div>
-            {profile?._id !== user._id && (
-              <button
-                onClick={followHandler}
-                className="border rounded-3"
-                style={{
-                  outline: "none",
-                  padding: "0.25rem 0.75rem",
-                  backgroundColor: "#1b15cf",
-                  cursor: "pointer",
-                  color: "#fff",
-                  fontSize: "18px",
-                }}
-              >
-                {isFollowed ? "Unfollow" : "Follow"}
-              </button>
-            )}
-          </div>
-          <div
-            className="d-flex justify-content-between"
-            style={{ gap: "10rem", margin: "2.5rem 0" }}
-          >
-            <div
-              style={{ fontWeight: "bold", fontSize: "18px", color: "#333" }}
-            >
-              Followings: {profile?.followings?.length}
-            </div>
-            <div
-              style={{ fontWeight: "bold", fontSize: "18px", color: "#333" }}
-            >
-              Followers: {profile?.followers?.length}
+        <div className=" row mt-4  ">
+          <div className="col-md-3 container ">
+            <ProfileCard />
+            <div className="d-flex align-items-center justify-content-center">
+              <Link to="/upload" className="btn btn-primary my-4  ">
+                Create a Post
+              </Link>
             </div>
           </div>
-
-          <h2 className="text-center">Bookmarked Posts</h2>
-          {user?.bookmarkedPosts?.length > 0 ? (
-            <div className="d-flex flex-column mt-4">
-              {user?.bookmarkedPosts?.map((post) => (
-                <div className="mb-4" key={post._id}>
-                  <Link
-                    to={`/postDetails/${post._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Post post={post} />
-                  </Link>
-                  {/* <div className="d-flex justify-content-center mb-4 position-relative ">
-                    <div
-                      className="rounded border pb-1 overflow-hidden shadow"
-                      style={{ width: "400px" }}
-                    >
-                      <div
-                        className="d-flex justify-content-between align-items-center"
-                        style={{
-                          paddingBottom: "1rem",
-                          marginTop: "8px",
-                          borderBottom: "1px solid #333",
-                          paddingLeft: "12px",
-                          paddingRight: "12px",
-                        }}
-                      >
-                        <img
-                          src={post.profileImg || female}
-                          alt=""
-                          className="border rounded-circle"
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div> */}
+          <div className="col-md-6">
+            <div className="d-flex flex-column align-items-center mt-3">
+              <div
+                className="d-flex align-items-center"
+                style={{ gap: "2.5rem" }}
+              >
+                <div style={{ width: "70px", height: "70px" }}>
+                  <img
+                    src={profile?.profileImg ? profile?.profileImg : female}
+                    className="border rounded-circle"
+                    style={{
+                      width: "70px",
+                      height: "70px",
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <h3 className="text-center">You have no bookmarked posts</h3>
-          )}
+                <div className="d-flex flex-column" style={{ gap: "12px" }}>
+                  <h4
+                    style={{
+                      textTransform: "capitalize",
+                      fontSize: "26px",
+                      color: "#333",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {profile?.username}
+                  </h4>
+                  <h4 style={{ fontWeight: "500", color: "#666" }}>
+                    Bio: {profile?.desc ? profile.desc : "Live Love Laugh"}
+                  </h4>
+                </div>
+                {profile?._id !== user._id && (
+                  <button
+                    onClick={followHandler}
+                    className="border rounded-3"
+                    style={{
+                      outline: "none",
+                      padding: "0.25rem 0.75rem",
+                      backgroundColor: "#1b15cf",
+                      cursor: "pointer",
+                      color: "#fff",
+                      fontSize: "18px",
+                    }}
+                  >
+                    {isFollowed ? "Unfollow" : "Follow"}
+                  </button>
+                )}
+              </div>
+              <div
+                className="d-flex justify-content-between"
+                style={{ gap: "10rem", margin: "2.5rem 0" }}
+              >
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    color: "#333",
+                  }}
+                >
+                  Followings: {profile?.followings?.length}
+                </div>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    color: "#333",
+                  }}
+                >
+                  Followers: {profile?.followers?.length}
+                </div>
+              </div>
+
+              <h2 className="text-center">Bookmarked Posts</h2>
+              {user?.bookmarkedPosts?.length > 0 ? (
+                <div className="d-flex flex-column mt-4">
+                  {user?.bookmarkedPosts?.map((post) => (
+                    <div className="mb-4" key={post._id}>
+                      <Link
+                        to={`/postDetails/${post._id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Post post={post} />
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <h3 className="text-center">You have no bookmarked posts</h3>
+              )}
+            </div>{" "}
+          </div>
+          <RightSide />
         </div>
       </div>
     </>

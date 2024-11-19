@@ -56,7 +56,7 @@ const ProfileForm = () => {
 
       const data = await res.json();
       dispatch(updateUser(data));
-      navigate("/");
+      navigate("/user");
     } catch (error) {
       console.error(error);
     }

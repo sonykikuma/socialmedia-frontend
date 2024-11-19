@@ -15,8 +15,11 @@ import ProfileBookmarks from "./components/profileDetails/ProfileBookmarks.jsx";
 import MyPost from "./pages/MyPost.jsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
-  { path: "/login", element: <Login /> },
+  { path: "/", element: <Login /> },
+  { path: "/user", element: <App /> },
+
+  // { path: "/", element: <App /> },
+  // { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/profileDetails/:id", element: <ProfileDetails /> },
   { path: "/postDetails/:id", element: <PostDetails /> },

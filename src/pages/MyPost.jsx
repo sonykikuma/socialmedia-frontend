@@ -1,80 +1,91 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-import { fetchProfileById, handleFollow } from "../features/authSlice";
 import Header from "../components/navbar/Header";
 import Post from "../components/post/Post";
+import { Link, useParams } from "react-router-dom";
 
 const MyPost = () => {
-  // const { id } = useParams();
+  const { id } = useParams(); // Assuming `id` is coming from the URL params
 
-  // const { user, profile, profilePosts, isFollowed } = useSelector(
-  //   (state) => state.auth
-  // );
-  // const { token } = useSelector((state) => state.auth);
-  // const [show, setShow] = useState("mypost");
-  // console.log("ID from URL:", user?.id);
-
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   console.log("Token from state:", token);
-
-  //   if (id && token) {
-  //     dispatch(fetchProfileById(id));
-  //   }
-  //   // You may also want to fetch posts or use cached data if available
-  // }, [id, dispatch, token]);
-
-  // const followHandler = () => {
-  //   dispatch(handleFollow(profile?._id));
-  // };
-  const { user, profile, profilePosts } = useSelector((state) => state.auth);
-  const { token } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
+  const [profile, setProfile] = useState(null);
+  const [profilePosts, setProfilePosts] = useState([]);
+  const [isFollowed, setIsFollowed] = useState(false);
   const dispatch = useDispatch();
 
+  const female =
+    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200";
+
   useEffect(() => {
-    if (user?.id && token) {
-      dispatch(fetchProfileById(user.id));
-    }
-  }, [user?.id, dispatch, token]);
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch(
+          `https://backend-social3.vercel.app/user/find/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await res.json();
+        setProfile(data);
+
+        // Determine if the logged-in user is following the profile user
+        if (user?._id !== data?._id) {
+          setIsFollowed(user?.followings?.includes(data?._id));
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    if (id) fetchProfile();
+  }, [id, token, user]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch(
+          `https://backend-social3.vercel.app/post/find/userposts/${id}`
+        );
+        const data = await res.json();
+        setProfilePosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    if (id) fetchPosts();
+  }, [id]);
 
   return (
     <>
       <Header />
       <div className="container mt-4">
         <div className="d-flex flex-column align-items-center mt-3">
-          {/* Profile and follow button */}
           <div className="d-flex align-items-center" style={{ gap: "2.5rem" }}>
             <img
-              src={profile?.profileImg}
+              src={profile?.profileImg || female}
               className="border rounded-circle"
               style={{ width: "70px", height: "70px", objectFit: "cover" }}
               alt="Profile"
             />
-            <div className="d-flex flex-column" style={{ gap: "12px" }}>
-              <h4
-                className="text-capitalize"
-                style={{ fontSize: "26px", color: "#333" }}
-              >
+            <div>
+              <h4 className="text-capitalize" style={{ fontSize: "26px" }}>
                 {profile?.username}
               </h4>
-              <h4 style={{ fontWeight: "500", color: "#666" }}>
+              <h4 style={{ fontWeight: "500" }}>
                 Bio: {profile?.desc || "Live Love Laugh"}
               </h4>
             </div>
           </div>
-
-          {/* Followings and Followers */}
           <div
             className="d-flex justify-content-between"
             style={{ gap: "10rem", margin: "2.5rem 0" }}
           >
-            <div>Followings: {profile?.followings?.length}</div>
-            <div>Followers: {profile?.followers?.length}</div>
+            <div>Followings: {profile?.followings?.length || 0}</div>
+            <div>Followers: {profile?.followers?.length || 0}</div>
           </div>
-
-          {/* Render All Posts */}
           {profilePosts?.length ? (
             <div className="d-flex flex-column mt-4">
               {profilePosts.map((post) => (
