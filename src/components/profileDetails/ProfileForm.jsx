@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import Header from "../navbar/Header";
 const ProfileForm = () => {
   const { token, user } = useSelector((state) => state.auth);
-  const [state, setState] = useState({});
+  const [state, setState] = useState({
+    username: user?.username || "",
+    email: user?.email || "",
+    bio: user?.bio || "",
+    // password: user?.password || "",
+  });
   const [photo, setPhoto] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      setState({
+        username: user.username || "",
+        email: user.email || "",
+        bio: user.bio || "",
+        // password: user.password || "",
+      });
+    }
+  }, [user]);
 
   const handleState = (e) => {
     setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -16,8 +32,10 @@ const ProfileForm = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    let imageUrl = null;
-    let filename = null;
+    let imageUrl = user?.profileImg || null;
+
+    // let imageUrl = null;
+    // let filename = null;
 
     if (photo) {
       const formData = new FormData();
@@ -79,6 +97,7 @@ const ProfileForm = () => {
                       className="form-control"
                       id="username"
                       name="username"
+                      value={state.username}
                       placeholder="Enter your username"
                       onChange={handleState}
                     />
@@ -91,6 +110,7 @@ const ProfileForm = () => {
                       className="form-control"
                       id="email"
                       name="email"
+                      value={state.email}
                       placeholder="Enter your email"
                       onChange={handleState}
                     />
@@ -104,21 +124,23 @@ const ProfileForm = () => {
                       name="bio"
                       rows="3"
                       placeholder="Write a short bio"
+                      value={state.bio}
                       onChange={handleState}
                     />
                   </div>
 
-                  <div className="form-group mb-3">
+                  {/* <div className="form-group mb-3">
                     <label htmlFor="password">Password</label>
                     <input
                       type="password"
                       className="form-control"
                       id="password"
                       name="password"
+                      value={state.password}
                       placeholder="Enter your password"
                       onChange={handleState}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group mb-4">
                     <label htmlFor="photo" className="form-label">
@@ -141,7 +163,19 @@ const ProfileForm = () => {
                       id="photo"
                       onChange={(e) => setPhoto(e.target.files[0])}
                     />
-                    {photo && <p className="mt-2">{photo.name}</p>}
+                    {/* {photo && <p className="mt-2">{photo.name}</p>} */}
+                    {photo ? (
+                      <p className="mt-2">{photo.name}</p>
+                    ) : (
+                      user?.profileImg && (
+                        <img
+                          src={user.profileImg}
+                          alt="Current Profile"
+                          className="img-fluid mt-2"
+                          style={{ maxWidth: "100px" }}
+                        />
+                      )
+                    )}
                   </div>
 
                   <div className="d-flex justify-content-end">

@@ -81,6 +81,9 @@ export const authSlice = createSlice({
     updateUser(state, action) {
       state.user = action.payload;
     },
+    setBookmarkedPosts(state, action) {
+      state.user.bookmarkedPosts = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -106,5 +109,6 @@ export const {
   handleFollow,
   bookmarkPost,
   updateUser,
+  setBookmarkedPosts,
 } = authSlice.actions;
 export default authSlice.reducer;

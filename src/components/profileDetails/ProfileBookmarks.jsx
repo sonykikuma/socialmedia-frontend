@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { handleFollow } from "../../features/authSlice";
+import { handleFollow, setBookmarkedPosts } from "../../features/authSlice";
 import Header from "../navbar/Header";
 import axios from "axios";
 import Post from "../post/Post";
@@ -45,6 +45,26 @@ const ProfileBookmarks = () => {
     };
     fetchProfile();
   }, [id]);
+
+  // useEffect(() => {
+  //   const fetchBookmarkedPosts = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `https://backend-social3.vercel.app/user/bookmarkedPosts`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       const data = await res.json();
+  //       setBookmarkedPosts(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchBookmarkedPosts();
+  // }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -175,6 +195,31 @@ const ProfileBookmarks = () => {
               </div>
 
               <h2 className="text-center">Bookmarked Posts</h2>
+              {console.log("bookmarked post:", user)}
+              {/* {user?.bookmarkedPosts?.map((post) => (
+                <div className="mb-4" key={post._id}>
+                  <Link
+                    to={`/postDetails/${post._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <img
+                        src={post.user?.profileImg || female}
+                        alt={post.user?.username}
+                        className="border rounded-circle"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <h5>{post.user?.username}</h5>
+                    </div>
+                    <Post post={post} />
+                  </Link>
+                </div>
+              ))} */}
+
               {user?.bookmarkedPosts?.length > 0 ? (
                 <div className="d-flex flex-column mt-4">
                   {user?.bookmarkedPosts?.map((post) => (

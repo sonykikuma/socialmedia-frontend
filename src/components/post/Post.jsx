@@ -11,7 +11,7 @@ const Post = ({ post }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [isCommentEmpty, setIsCommentEmpty] = useState(false);
-  const [isLiked, setIsLiked] = useState(post.likes.includes(user._id));
+  const [isLiked, setIsLiked] = useState(post?.likes?.includes(user._id));
   const [isBookmark, setIsBookmark] = useState(
     user?.bookmarkedPosts?.some(
       (bookmarkedPost) => bookmarkedPost._id == post._id
@@ -194,18 +194,21 @@ const Post = ({ post }) => {
 
             <div className="d-flex flex-column">
               <span style={{ fontSize: "18px", fontWeight: "500" }}>
-                {capitalizeFirstLetter(post.user.username)}
+                {capitalizeFirstLetter(post?.user?.username)}
               </span>
               <span style={{ fontSize: "15px", color: "#555" }}>
                 {format(post.createdAt)}
               </span>
             </div>
           </Link>
-          {user._id === post.user._id && (
+          {user._id === post?.user?._id && (
             <>
               {/* <span onClick={() => setIsEditing((prev) => !prev)}>Edit</span> */}
 
-              <span onClick={() => setShowDeleteModal((prev) => !prev)}>
+              <span
+                onClick={() => setShowDeleteModal((prev) => !prev)}
+                style={{ cursor: "pointer" }}
+              >
                 {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -300,9 +303,6 @@ const Post = ({ post }) => {
               post?.photo
                 ? post?.photo
                 : "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200"
-              // post?.photo
-              //   ? `http://localhost:3000/uploads/${post.photo}`
-              //   : female
             }
             alt="post"
           />
@@ -357,7 +357,7 @@ const Post = ({ post }) => {
             </span>
           </div>
           <div className="d-flex " style={{ gap: "8px" }}>
-            {user._id === post.user._id && (
+            {user._id === post?.user?._id && (
               <span onClick={() => setIsEditing((prev) => !prev)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -374,7 +374,7 @@ const Post = ({ post }) => {
 
             <div onClick={handleBookmark}>
               {isBookmark ? (
-                <span>
+                <span style={{ cursor: "pointer" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -387,7 +387,7 @@ const Post = ({ post }) => {
                   </svg>
                 </span>
               ) : (
-                <span>
+                <span style={{ cursor: "pointer" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

@@ -26,7 +26,7 @@ const SuggestedUsers = () => {
         );
 
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         setSuggestedUsers(data);
       } catch (error) {
         console.log(error);
