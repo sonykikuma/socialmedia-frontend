@@ -1,5 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// export const updatePost = createAsyncThunk('posts/updatePost', async ({ id, updatedDesc }) => {
+//   const response = await fetch(`/api/posts/${id}`, {
+//     method: 'PUT',
+//     body: JSON.stringify({ desc: updatedDesc }),
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+//   const data = await response.json();
+//   return data;  // Ensure it returns the updated post
+// });
+
 export const postSlice = createSlice({
   name: "posts",
   initialState: {

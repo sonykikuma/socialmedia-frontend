@@ -95,7 +95,7 @@ const Post = ({ post }) => {
 
         setEditedContent(updatedPost.desc);
         setIsEditing(false);
-        window.location.reload(); //used here for refreshing but  Not recommended for smooth UX
+        //window.location.reload(); //used here for refreshing but  Not recommended for smooth UX
       }
     } catch (error) {
       console.log(error);
