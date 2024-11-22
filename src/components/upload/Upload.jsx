@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Upload = () => {
   const [state, setState] = useState({});
   const [photo, setPhoto] = useState("");
+  const [preview, setPreview] = useState(null);
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -13,6 +14,14 @@ const Upload = () => {
     setState((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
+  };
+
+  const previewHandler = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setPreview(URL.createObjectURL(file));
+    }
   };
 
   const uploadHandler = async (e) => {
@@ -63,7 +72,7 @@ const Upload = () => {
           Authorization: `Bearer ${token}`,
         },
         method: "POST",
-        body: JSON.stringify({ ...state, photo: imageUrl }), //filename
+        body: JSON.stringify({ ...state, photo: imageUrl }),
       });
 
       const data = await res.json();
@@ -138,8 +147,24 @@ const Upload = () => {
               type="file"
               id="photo"
               style={{ display: "none" }}
-              onChange={(e) => setPhoto(e.target.files[0])}
+              onChange={previewHandler}
+
+              // onChange={(e) => setPhoto(e.target.files[0])}
             />
+            {preview && (
+              <img
+                src={preview}
+                alt="preview"
+                style={{
+                  width: "100%",
+                  maxHeight: "300px",
+                  objectFit: "cover",
+                  marginTop: "10px",
+                  borderRadius: "10px",
+                }}
+              />
+            )}{" "}
+            <br />
             <input
               className="form-control"
               type="text"

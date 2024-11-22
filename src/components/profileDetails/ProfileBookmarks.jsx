@@ -13,7 +13,7 @@ const ProfileBookmarks = () => {
   const [profilePosts, setProfilePosts] = useState([]);
   const { user, token } = useSelector((state) => state.auth);
   const [isFollowed, setIsFollowed] = useState(false);
-  const [show, setShow] = useState("mypost");
+  //const [show, setShow] = useState("mypost");
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -58,13 +58,13 @@ const ProfileBookmarks = () => {
   //         }
   //       );
   //       const data = await res.json();
-  //       setBookmarkedPosts(data);
+  //       dispatch(setBookmarkedPosts(data));
   //     } catch (error) {
   //       console.log(error);
   //     }
   //   };
   //   fetchBookmarkedPosts();
-  // }, []);
+  // }, [token, dispatch]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -196,30 +196,24 @@ const ProfileBookmarks = () => {
 
               <h2 className="text-center">Bookmarked Posts</h2>
               {console.log("bookmarked post:", user)}
-              {/* {user?.bookmarkedPosts?.map((post) => (
-                <div className="mb-4" key={post._id}>
-                  <Link
-                    to={`/postDetails/${post._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="d-flex align-items-center">
-                      <img
-                        src={post.user?.profileImg || female}
-                        alt={post.user?.username}
-                        className="border rounded-circle"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <h5>{post.user?.username}</h5>
+              {/* {user?.bookmarkedPosts?.length > 0 ? (
+                <div className="d-flex flex-column mt-4">
+                  {user.bookmarkedPosts.map((post) => (
+                    <div className="mb-4" key={post._id}>
+                      <Link
+                        to={`/postDetails/${post._id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Post post={post} />
+                      </Link>
                     </div>
-                    <Post post={post} />
-                  </Link>
+                  ))}
                 </div>
-              ))} */}
+              ) : (
+                <h3 className="text-center">You have no bookmarked posts</h3>
+              )} */}
 
+              {/* {profile?.bookmarkedPosts?.length > 0 ? ( */}
               {user?.bookmarkedPosts?.length > 0 ? (
                 <div className="d-flex flex-column mt-4">
                   {user?.bookmarkedPosts?.map((post) => (
@@ -238,7 +232,9 @@ const ProfileBookmarks = () => {
               )}
             </div>{" "}
           </div>
-          <RightSide />
+          <div className="col-md-3">
+            <RightSide />
+          </div>
         </div>
       </div>
     </>

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="container mx-auto">
-      <div className=" row mt-4 d-flex justify-content-between ">
+    <div className="container">
+      <div className=" row  mt-4">
         <div className="col-md-3 container ">
           <ProfileCard />
           <div className="d-flex align-items-center justify-content-center">
@@ -16,8 +16,12 @@ const Home = () => {
             </Link>
           </div>
         </div>
-        <Posts />
-        <RightSide />
+        <div className="container col-md-6">
+          <Posts />
+        </div>
+        <div className=" col-md-3 ">
+          <RightSide />
+        </div>
       </div>
     </div>
   );

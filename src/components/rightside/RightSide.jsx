@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import SuggestedUsers from "../suggestedUsers/SuggestedUsers";
+import AllUsers from "./AllUsers";
 
 const RightSide = () => {
   const [friends, setFriends] = useState([]);
@@ -38,45 +39,50 @@ const RightSide = () => {
   }, [user?.followings]);
 
   if (loading) {
-    return <p>loading friends.....</p>;
+    return (
+      <div className="d-flex justify-content-center align-items-center py-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
   if (error) return <p>Error: {error}</p>;
 
   return (
     <>
-      <div className="container col-md-3 ">
-        <div className="d-flex flex-column pb-2 align-items-center">
-          {friends?.length > 0 ? (
-            friends?.map((friend) => (
-              <Link
-                className="d-flex align-items-center mb-4"
-                key={friend?._id}
-                to={`/profileDetails/${friend?._id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <img
-                  src={friend?.profileImg ? friend?.profileImg : female}
-                  alt=""
-                  className="border rounded-circle"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    objectFit: "cover",
-                  }}
-                />
-                <div className="ms-2">
-                  <span style={{ fontSize: "18px", fontWeight: "500" }}>
-                    {capitalizeFirstLetter(friend?.username)}
-                  </span>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <span>You have no friends, follow someone!</span>
-          )}
-        </div>
-        <SuggestedUsers />
+      {/* <div className="d-flex flex-column pb-2 align-items-center">
+        {friends?.length > 0 ? (
+          friends?.map((friend) => (
+            <Link
+              className="d-flex align-items-center mb-4"
+              key={friend?._id}
+              to={`/profileDetails/${friend?._id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <img
+                src={friend?.profileImg ? friend?.profileImg : female}
+                alt=""
+                className="border rounded-circle"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                }}
+              />
+              <div className="ms-2">
+                <span style={{ fontSize: "18px", fontWeight: "500" }}>
+                  {capitalizeFirstLetter(friend?.username)}
+                </span>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <span>You have no friends, follow someone!</span>
+        )}
       </div>
+      <SuggestedUsers /> */}
+      <AllUsers />
     </>
   );
 };

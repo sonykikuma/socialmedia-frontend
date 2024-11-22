@@ -119,7 +119,9 @@ const MyPost = () => {
               )}
             </div>
           </div>
-          <RightSide />
+          <div className="col-md-3">
+            <RightSide />
+          </div>
         </div>
       </div>
     </>

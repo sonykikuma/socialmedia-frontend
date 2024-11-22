@@ -38,35 +38,37 @@ const Posts = () => {
     }
     return posts;
   };
+  const sortedPosts = sortPosts(posts);
 
   return (
     <>
       {" "}
-      <div className="container col-md-6">
-        <div
-          className="d-flex align-items-center justify-content-center mb-4"
-          style={{ gap: "20px" }}
+      {/* <div className="container col-md-6"> */}
+      <div
+        className="d-flex align-items-center justify-content-center mb-4"
+        style={{ gap: "20px" }}
+      >
+        <button
+          className="btn btn-primary me-2"
+          onClick={() => setSortType("date")}
         >
-          <button
-            className="btn btn-primary me-2"
-            onClick={() => setSortType("date")}
-          >
-            Sort by Date
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setSortType("trending")}
-          >
-            Sort by Trending
-          </button>
-        </div>
-        {Array.isArray(posts) && posts.length > 0 ? (
-          // posts.map((post) => <Post key={post._id} post={post} />)
-          sortPosts(posts).map((post) => <Post key={post._id} post={post} />)
-        ) : (
-          <p>No posts available.</p>
-        )}
+          Sort by Date
+        </button>
+        <button
+          className="btn btn-secondary"
+          onClick={() => setSortType("trending")}
+        >
+          Sort by Trending
+        </button>
       </div>
+      {/* {Array.isArray(posts) && posts.length > 0 ? ( */}
+      {Array.isArray(sortedPosts) && sortedPosts.length > 0 ? (
+        sortedPosts.map((post) => <Post key={post._id} post={post} />)
+      ) : (
+        // sortPosts(posts)?.map((post) => <Post key={post._id} post={post} />)
+        <p>No posts available.</p>
+      )}
+      {/* </div> */}
     </>
   );
 };

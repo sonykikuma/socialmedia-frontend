@@ -47,58 +47,102 @@ const SignUp = () => {
   };
 
   return (
-    <div
-      className="container d-flex align-items-center justify-content-center min-vh-100 bg-info-subtle "
-      style={{ width: "100%" }}
-    >
-      <div className="row  w-100">
-        <div className="col-md-6 d-flex justify-content-center">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJrT7MI9fsrc6mWRBJBwhrf4vwTL7S5B8CzQ&s"
-            className=""
-            style={{ width: "400px", objectFit: "cover" }}
+    <main className="container">
+      <div className="d-flex flex-column align-items-center justify-content-center mt-4 min-vh-100">
+        <h2 className="text-primary text-center mb-4">
+          Sign Up to be an User here
+        </h2>
+        <form
+          onSubmit={signupHandler}
+          className="d-flex flex-column    rounded px-3 py-3"
+          style={{ maxWidth: "600px", width: "100%" }}
+        >
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />{" "}
+          <br />
+          <input
+            className="form-control"
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
-        <div className="col-md-6 mt-3">
-          <h2 className="text-danger text-center ">Sign Up</h2>
-          <form onSubmit={signupHandler} className="d-flex flex-column ">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />{" "}
-            <br />
-            <input
-              className="form-control"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <input
-              className="form-control"
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <button type="submit" className="btn btn-danger">
-              Sign Up
-            </button>
-            <p className="mt-4">
-              Already have an account?{" "}
-              <Link to="/" className="text-primary fw-bold">
-                Login
-              </Link>
-            </p>
-          </form>
-          {error && (
-            <div className="">Wrong credentials! try different ones</div>
-          )}
-        </div>
+          <br />
+          <input
+            className="form-control"
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br />
+          <button type="submit" className="btn btn-primary">
+            Sign Up
+          </button>
+          <p className="mt-4">
+            Already have an account?{" "}
+            <Link to="/" className="text-primary ">
+              Login
+            </Link>
+          </p>
+        </form>
+        {error && <div className="">Wrong credentials! try different ones</div>}
       </div>
-    </div>
+      {/* <div
+        className="container d-flex align-items-center justify-content-center min-vh-100 bg-info-subtle "
+        style={{ width: "100%" }}
+      >
+        <div className="row  w-100">
+          <div className="col-md-6 d-flex justify-content-center">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJrT7MI9fsrc6mWRBJBwhrf4vwTL7S5B8CzQ&s"
+              className=""
+              style={{ width: "400px", objectFit: "cover" }}
+            />
+          </div>
+          <div className="col-md-6 mt-3">
+            <h2 className="text-danger text-center ">Sign Up</h2>
+            <form onSubmit={signupHandler} className="d-flex flex-column ">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />{" "}
+              <br />
+              <input
+                className="form-control"
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br />
+              <input
+                className="form-control"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <br />
+              <button type="submit" className="btn btn-danger">
+                Sign Up
+              </button>
+              <p className="mt-4">
+                Already have an account?{" "}
+                <Link to="/" className="text-primary fw-bold">
+                  Login
+                </Link>
+              </p>
+            </form>
+            {error && (
+              <div className="">Wrong credentials! try different ones</div>
+            )}
+          </div>
+        </div>
+      </div> */}
+    </main>
   );
 };
 

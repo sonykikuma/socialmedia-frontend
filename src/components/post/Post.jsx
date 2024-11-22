@@ -89,7 +89,7 @@ const Post = ({ post }) => {
       );
 
       if (res.ok) {
-        const updatedPost = await res.json(); // assuming the updated post is returned
+        const updatedPost = await res.json();
 
         setIsEditing(false);
         window.location.reload(); //used here for refreshing but  Not recommended for smooth UX

@@ -7,7 +7,7 @@ import { handleFollow } from "../../features/authSlice";
 const SuggestedUsers = () => {
   const { user, token } = useSelector((state) => state.auth);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
-  const [usercount, setUsercount] = useState(4);
+  const [usercount, setUsercount] = useState(5);
   const dispatch = useDispatch();
 
   const female =
