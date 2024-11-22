@@ -15,15 +15,21 @@ export const postSlice = createSlice({
       state.posts.push(action.payload);
     },
     updatePost(state, action) {
-      const { postId, updatedPost } = action.payload;
-
-      const postIndex = state.posts.findIndex((post) => post._id === postId);
+      const { id, updatedDesc } = action.payload;
+      const postIndex = state.findIndex((post) => post._id === id);
       if (postIndex !== -1) {
-        state.posts[postIndex] = {
-          ...state.posts[postIndex],
-          ...updatedPost,
-        };
+        state[postIndex].desc = updatedDesc; // Update the post description
       }
+
+      // const { postId, updatedPost } = action.payload;
+
+      // const postIndex = state.posts.findIndex((post) => post._id === postId);
+      // if (postIndex !== -1) {
+      //   state.posts[postIndex] = {
+      //     ...state.posts[postIndex],
+      //     ...updatedPost,
+      //   };
+      // }
     },
     deletePost(state, action) {
       const postId = action.payload;

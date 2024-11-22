@@ -5,6 +5,7 @@ import { format } from "timeago.js";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import Comment from "../comment/Comment";
 import { bookmarkPost } from "../../features/authSlice";
+import { updatePost } from "../../features/postSlice";
 
 const Post = ({ post }) => {
   const { token, user } = useSelector((state) => state.auth);
@@ -90,7 +91,9 @@ const Post = ({ post }) => {
 
       if (res.ok) {
         const updatedPost = await res.json();
+        //dispatch(updatePost({ id: post._id, updatedDesc: updatedPost.desc }));
 
+        setEditedContent(updatedPost.desc);
         setIsEditing(false);
         window.location.reload(); //used here for refreshing but  Not recommended for smooth UX
       }
