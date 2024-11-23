@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import ProfileCard from "../profileCard/ProfileCard";
 import Posts from "../posts/Posts";
 import RightSide from "../rightside/RightSide";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [refreshPosts, setRefreshPosts] = useState(false);
+
+  const handleRefreshPosts = () => {
+    setRefreshPosts((prev) => !prev);
+  };
+
   return (
     <div className="container">
       <div className=" row  mt-4">
@@ -17,10 +23,10 @@ const Home = () => {
           </div>
         </div>
         <div className="container col-md-6">
-          <Posts />
+          <Posts refreshPosts={refreshPosts} />
         </div>
         <div className=" col-md-3 ">
-          <RightSide />
+          <RightSide onFollowChange={handleRefreshPosts} />
         </div>
       </div>
     </div>

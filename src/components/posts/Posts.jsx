@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Post from "../post/Post";
 
-const Posts = () => {
+const Posts = ({ refreshPosts }) => {
   const [posts, setPosts] = useState([]);
   const { token } = useSelector((state) => state.auth);
   const [sortType, setSortType] = useState("date");
@@ -26,7 +26,7 @@ const Posts = () => {
       }
     };
     fetchPost();
-  }, []);
+  }, [refreshPosts, token]);
 
   const sortPosts = (posts) => {
     if (sortType === "date") {

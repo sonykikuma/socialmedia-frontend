@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import { handleFollow } from "../../features/authSlice";
 
-const AllUsers = () => {
+const AllUsers = ({ onFollowChange }) => {
   const { user, token } = useSelector((state) => state.auth);
   const [friends, setFriends] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
@@ -58,6 +58,7 @@ const AllUsers = () => {
         }
       );
       dispatch(handleFollow(id));
+      onFollowChange();
     } catch (err) {
       console.log(err);
     }

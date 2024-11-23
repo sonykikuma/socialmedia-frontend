@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import SuggestedUsers from "../suggestedUsers/SuggestedUsers";
 import AllUsers from "./AllUsers";
 
-const RightSide = () => {
+const RightSide = ({ onFollowChange }) => {
   const [friends, setFriends] = useState([]);
   const { user, token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
@@ -82,7 +82,7 @@ const RightSide = () => {
         )}
       </div>
       <SuggestedUsers /> */}
-      <AllUsers />
+      <AllUsers onFollowChange={onFollowChange} />
     </>
   );
 };
