@@ -188,7 +188,6 @@ const Post = ({ post }) => {
           >
             <img
               src={post?.user?.profileImg ? post?.user?.profileImg : female}
-              //src={post?.user?.profileImg || female}
               alt=""
               className="border rounded-circle"
               style={{ width: "40px", height: "40px", objectFit: "cover" }}
@@ -226,7 +225,98 @@ const Post = ({ post }) => {
               </span>
             </>
           )}
+
           {showDeleteModal && (
+            <div
+              className="position-absolute d-flex flex-column rounded shadow  border"
+              style={{
+                width: "80px",
+                right: "1.5rem",
+                top: "1.5rem",
+                //backgroundColor: "#878181",
+                // color: "#fff",
+                gap: "8px",
+                padding: "8px",
+              }}
+            >
+              {/* <h3>Delete Post</h3> */}
+              <div
+                className="d-flex flex-column justify-content-center align-items-center"
+                style={{ gap: "0.75rem" }}
+              >
+                <span
+                  style={{
+                    outline: "none",
+                    border: "none",
+                    padding: "0.2rem 0.2rem",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                  }}
+                  onClick={deletePost}
+                >
+                  {/* Delete */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-trash-fill text-danger"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                  </svg>
+                </span>
+                {/* editing icon */}
+                {user._id === post?.user?._id && (
+                  <span
+                    onClick={() => setIsEditing((prev) => !prev)}
+                    style={{
+                      outline: "none",
+                      border: "none",
+                      padding: "0.2rem 0.4rem",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-pencil text-primary"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                    </svg>{" "}
+                  </span>
+                )}
+                <span
+                  className="text-primary"
+                  style={{
+                    outline: "none",
+                    border: "none",
+                    padding: "0.2rem 0.4rem",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowDeleteModal((prev) => !prev)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-x-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                  </svg>{" "}
+                </span>
+              </div>{" "}
+            </div>
+          )}
+
+          {/* {showDeleteModal && (
             <div
               className="position-absolute d-flex flex-column rounded"
               style={{
@@ -267,7 +357,7 @@ const Post = ({ post }) => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
         {/* editing  feature */}
         <div>
@@ -283,7 +373,11 @@ const Post = ({ post }) => {
                 onChange={(e) => setEditedImage(e.target.files[0])}
                 style={{ marginTop: "0.5rem" }}
               /> */}
-              <button onClick={handleEditPost} style={{ marginTop: "1rem" }}>
+              <button
+                onClick={handleEditPost}
+                style={{ marginTop: "1rem" }}
+                className="btn btn-primary"
+              >
                 Save
               </button>
             </div>
@@ -360,7 +454,7 @@ const Post = ({ post }) => {
             </span>
           </div>
           <div className="d-flex " style={{ gap: "8px" }}>
-            {user._id === post?.user?._id && (
+            {/* {user._id === post?.user?._id && (
               <span onClick={() => setIsEditing((prev) => !prev)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -373,7 +467,7 @@ const Post = ({ post }) => {
                   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                 </svg>{" "}
               </span>
-            )}
+            )} */}
 
             <div onClick={handleBookmark}>
               {isBookmark ? (
@@ -444,7 +538,7 @@ const Post = ({ post }) => {
                 placeholder="Comment here..."
               />
               {/* {commentText} */}
-              <button className="text-primary " onClick={handlePostComment}>
+              <button className="btn-primary btn" onClick={handlePostComment}>
                 Post
               </button>
             </div>
