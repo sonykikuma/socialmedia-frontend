@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-import { handleFollow, setBookmarkedPosts } from "../../features/authSlice";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { handleFollow } from "../../features/authSlice";
+import { format } from "timeago.js";
+
 import Header from "../navbar/Header";
-import axios from "axios";
-import Post from "../post/Post";
-import ProfileCard from "../profileCard/ProfileCard";
 import RightSide from "../rightside/RightSide";
+import ProfileCard from "../profileCard/ProfileCard";
 
 const ProfileBookmarks = () => {
-  const [profile, setProfile] = useState("");
-  const [profilePosts, setProfilePosts] = useState([]);
   const { user, token } = useSelector((state) => state.auth);
+  const [profile, setProfile] = useState("");
+  const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+  //const [profileImages, setProfileImages] = useState({});
   const [isFollowed, setIsFollowed] = useState(false);
-  //const [show, setShow] = useState("mypost");
-  const dispatch = useDispatch();
-  const { id } = useParams();
+  const [profileData, setProfileData] = useState({});
 
-  const female =
-    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200";
+  console.log(user);
 
   useEffect(() => {
+    // fetching user profile and compare user id with the id of user in a bookmarked post
     const fetchProfile = async () => {
       try {
         const res = await fetch(
-          `https://backend-social3.vercel.app/user/find/${id}`,
+          `https://backend-social3.vercel.app/user/find/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -32,55 +31,83 @@ const ProfileBookmarks = () => {
           }
         );
         const data = await res.json();
-        // console.log("Fetched profile data:", data);
-
         setProfile(data);
-
-        if (user?._id !== data?._id) {
-          setIsFollowed(user?.followings?.includes(data?._id));
-        }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchProfile();
-  }, [id]);
-
-  // useEffect(() => {
-  //   const fetchBookmarkedPosts = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `https://backend-social3.vercel.app/user/bookmarkedPosts`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       const data = await res.json();
-  //       dispatch(setBookmarkedPosts(data));
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchBookmarkedPosts();
-  // }, [token, dispatch]);
+  }, [user, token]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    // Fetching the bookmarked posts of the user
+    const fetchBookmarkedPosts = async () => {
       try {
         const res = await fetch(
-          `https://backend-social3.vercel.app/post/find/userposts/${id}`
+          `https://backend-social3.vercel.app/user/bookmarkedPosts`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const data = await res.json();
+        setBookmarkedPosts(data);
 
-        setProfilePosts(data);
+        // Fetching the profile data (images and usernames) for each bookmarked post's user
+        const fetchProfileData = async () => {
+          const profiles = {};
+          for (const post of data) {
+            try {
+              const res = await fetch(
+                `https://backend-social3.vercel.app/user/find/${post.user}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              const userData = await res.json();
+              profiles[post._id] = {
+                profileImg: userData.profileImg || "defaultProfileImage.jpg",
+                username: userData.username || "Unknown User",
+              };
+            } catch (error) {
+              console.error("Error fetching user profile data:", error);
+            }
+          }
+          setProfileData(profiles);
+        };
+        fetchProfileData();
+
+        // Fetching the profile images for each bookmarked post's user
+        // const fetchProfileImages = async () => {
+        //   const images = {};
+        //   for (const post of data) {
+        //     try {
+        //       const res = await fetch(
+        //         `https://backend-social3.vercel.app/user/find/${post.user}`,
+        //         {
+        //           headers: {
+        //             Authorization: `Bearer ${token}`,
+        //           },
+        //         }
+        //       );
+        //       const data = await res.json();
+        //       images[post._id] = data.profileImg || "defaultProfileImage.jpg";
+        //     } catch (error) {
+        //       console.error("Error fetching user profile image:", error);
+        //     }
+        //   }
+        //   setProfileImages(images);
+        // };
+        // fetchProfileImages();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
-    fetchPosts();
-  }, [id]);
+    fetchBookmarkedPosts();
+  }, [token]);
 
   const followHandler = async () => {
     try {
@@ -112,7 +139,7 @@ const ProfileBookmarks = () => {
     <>
       <Header />
       <div className="container mt-4">
-        <div className=" row mt-4  ">
+        <div className="row ">
           <div className="col-md-3 container ">
             <ProfileCard />
             <div className="d-flex align-items-center justify-content-center">
@@ -121,116 +148,134 @@ const ProfileBookmarks = () => {
               </Link>
             </div>
           </div>
+
           <div className="col-md-6">
             <div className="d-flex flex-column align-items-center mt-3">
               <div
                 className="d-flex align-items-center"
                 style={{ gap: "2.5rem" }}
               >
-                <div style={{ width: "70px", height: "70px" }}>
-                  <img
-                    src={profile?.profileImg ? profile?.profileImg : female}
-                    className="border rounded-circle"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div className="d-flex flex-column" style={{ gap: "12px" }}>
-                  <h4
-                    style={{
-                      textTransform: "capitalize",
-                      fontSize: "26px",
-                      color: "#333",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {profile?.username}
+                <img
+                  src={user?.profileImg || female}
+                  className="border rounded-circle"
+                  style={{ width: "70px", height: "70px", objectFit: "cover" }}
+                  alt="Profile"
+                />
+                <div>
+                  <h4 className="text-capitalize" style={{ fontSize: "26px" }}>
+                    {user?.username}
                   </h4>
-                  <h4 style={{ fontWeight: "500", color: "#666" }}>
-                    Bio: {profile?.desc ? profile.desc : "Live Love Laugh"}
+                  <h4 style={{ fontWeight: "500" }}>
+                    Bio: {user?.desc || "Live Love Laugh"}
                   </h4>
                 </div>
-                {profile?._id !== user._id && (
-                  <button
-                    onClick={followHandler}
-                    className="border rounded-3"
-                    style={{
-                      outline: "none",
-                      padding: "0.25rem 0.75rem",
-                      backgroundColor: "#1b15cf",
-                      cursor: "pointer",
-                      color: "#fff",
-                      fontSize: "18px",
-                    }}
-                  >
-                    {isFollowed ? "Unfollow" : "Follow"}
-                  </button>
-                )}
               </div>
               <div
                 className="d-flex justify-content-between"
                 style={{ gap: "10rem", margin: "2.5rem 0" }}
               >
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    color: "#333",
-                  }}
-                >
-                  Followings: {profile?.followings?.length}
-                </div>
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    color: "#333",
-                  }}
-                >
-                  Followers: {profile?.followers?.length}
-                </div>
+                <div>Followings: {user?.followings?.length || 0}</div>
+                <div>Followers: {user?.followers?.length || 0}</div>
               </div>
-
+              {/* bookmarked post */}
               <h2 className="text-center">Bookmarked Posts</h2>
-              {console.log("bookmarked post:", user)}
-              {/* {user?.bookmarkedPosts?.length > 0 ? (
-                <div className="d-flex flex-column mt-4">
-                  {user.bookmarkedPosts.map((post) => (
-                    <div className="mb-4" key={post._id}>
-                      <Link
-                        to={`/postDetails/${post._id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Post post={post} />
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <h3 className="text-center">You have no bookmarked posts</h3>
-              )} */}
+              {bookmarkedPosts.length > 0 ? (
+                <div
+                  className="d-flex align-items-center justify-content-center mb-4"
+                  style={{ gap: "20px" }}
+                >
+                  <div className="d-flex flex-column mt-4">
+                    {bookmarkedPosts.map((post) => (
+                      <>
+                        <div
+                          className="rounded border pb-1 overflow-hidden shadow mb-4"
+                          style={{ width: "400px" }}
+                        >
+                          <div
+                            className="d-flex  align-items-center"
+                            style={{
+                              paddingBottom: "1rem",
+                              marginTop: "8px",
+                              borderBottom: "1px solid #333",
+                              paddingLeft: "12px",
+                              paddingRight: "12px",
+                            }}
+                          >
+                            {" "}
+                            <Link
+                              to={`/postDetails/${post._id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <img
+                                src={
+                                  profileData[post._id]?.profileImg ||
+                                  "defaultProfileImage.jpg"
+                                }
+                                // src={
+                                //   profileImages[post._id] ||
+                                //   "defaultProfileImage.jpg"
+                                // } // Fallback image if none is found
+                                alt=""
+                                className="border rounded-circle"
+                                style={{
+                                  width: "40px",
+                                  height: "40px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </Link>
+                            <div className="d-flex flex-column ms-2">
+                              <span
+                                style={{ fontSize: "18px", fontWeight: "500" }}
+                              >
+                                {/* {post?.user?.username} */}
+                                {profileData[post._id]?.username ||
+                                  "Unknown User"}
+                              </span>
+                              <span style={{ fontSize: "15px", color: "#555" }}>
+                                {format(post.createdAt)}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div
+                              style={{
+                                fontSize: "18px",
+                                color: "#333",
+                                padding: "1rem",
+                              }}
+                            >
+                              {post.desc}
+                            </div>
+                            {post?.location && (
+                              <div style={{ color: "#333", padding: "1rem" }}>
+                                Location: {post.location}
+                              </div>
+                            )}
 
-              {/* {profile?.bookmarkedPosts?.length > 0 ? ( */}
-              {user?.bookmarkedPosts?.length > 0 ? (
-                <div className="d-flex flex-column mt-4">
-                  {user?.bookmarkedPosts?.map((post) => (
-                    <div className="mb-4" key={post._id}>
-                      <Link
-                        to={`/postDetails/${post._id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Post post={post} />
-                      </Link>
-                    </div>
-                  ))}
+                            <img
+                              style={{
+                                height: "400px",
+                                width: "100%",
+                                objectFit: "cover",
+                              }}
+                              src={
+                                post?.photo
+                                  ? post?.photo
+                                  : "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                              }
+                              alt="post"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <h3 className="text-center">You have no bookmarked posts</h3>
-              )}
-            </div>{" "}
+              )}{" "}
+            </div>
           </div>
           <div className="col-md-3">
             <RightSide />

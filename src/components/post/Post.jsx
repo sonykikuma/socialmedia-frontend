@@ -5,7 +5,7 @@ import { format } from "timeago.js";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import Comment from "../comment/Comment";
 import { bookmarkPost } from "../../features/authSlice";
-import { updatePost } from "../../features/postSlice";
+// import { updatePost } from "../../features/postSlice";
 
 const Post = ({ post }) => {
   const { token, user } = useSelector((state) => state.auth);

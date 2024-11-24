@@ -21,7 +21,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   auth: authSlice,
-  posts: postSlice,
+  posts: postSlice, // didnot used postslice code
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
