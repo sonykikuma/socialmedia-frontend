@@ -17,6 +17,8 @@ const ProfileBookmarks = () => {
   const [profileData, setProfileData] = useState({});
 
   console.log(user);
+  const female =
+    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200";
 
   useEffect(() => {
     // fetching user profile and compare user id with the id of user in a bookmarked post
@@ -69,7 +71,8 @@ const ProfileBookmarks = () => {
               );
               const userData = await res.json();
               profiles[post._id] = {
-                profileImg: userData.profileImg || "defaultProfileImage.jpg",
+                profileImg: userData.profileImg || female,
+                //"defaultProfileImage.jpg",
                 username: userData.username || "Unknown User",
               };
             } catch (error) {
@@ -208,8 +211,8 @@ const ProfileBookmarks = () => {
                             >
                               <img
                                 src={
-                                  profileData[post._id]?.profileImg ||
-                                  "defaultProfileImage.jpg"
+                                  profileData[post._id]?.profileImg || female
+                                  //"defaultProfileImage.jpg"
                                 }
                                 // src={
                                 //   profileImages[post._id] ||
@@ -224,6 +227,7 @@ const ProfileBookmarks = () => {
                                 }}
                               />
                             </Link>
+                            {console.log(profileData[post._id]?.profileImg)}
                             <div className="d-flex flex-column ms-2">
                               <span
                                 style={{ fontSize: "18px", fontWeight: "500" }}
