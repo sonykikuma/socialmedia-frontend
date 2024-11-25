@@ -12,6 +12,7 @@ const AllUsers = ({ onFollowChange }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const [usercount, setUsercount] = useState(5);
+  const [search, setSearch] = useState("");
 
   const defaultProfileImg =
     "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200";
@@ -70,11 +71,24 @@ const AllUsers = ({ onFollowChange }) => {
 
   const combinedUsers = [...friends, ...suggestedUsers];
 
+  const searchedUser = combinedUsers.filter((user) =>
+    user.username.toLowerCase().includes(search.toLowerCase())
+  );
+
   // if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container mt-4">
+      <input
+        type="text"
+        placeholder="Search users..."
+        className="form-control px-2 mb-2"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        //  style={{ marginLeft: "1rem" }}
+      />
+
       <div className="d-flex align-items-center justify-content-between  pt-2 ">
         <span className="fw-bold fs-100">
           {" "}
@@ -88,7 +102,7 @@ const AllUsers = ({ onFollowChange }) => {
         </span>
       </div>
       <hr />
-      {combinedUsers.slice(0, usercount).map((userItem) => (
+      {searchedUser.slice(0, usercount).map((userItem) => (
         <div
           key={userItem._id}
           className="d-flex justify-content-between align-items-center mb-4"
