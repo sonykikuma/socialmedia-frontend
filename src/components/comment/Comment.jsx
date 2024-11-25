@@ -74,7 +74,14 @@ const Comment = ({ c, deleteComment }) => {
             {format(comment?.createdAt)}
           </span>
         </div>
-        <div>{comment?.commentText}</div>
+        <div className="text-wrap" style={{ maxWidth: "200px" }}>
+          <div
+            className=""
+            style={{ overflow: "hidden", whiteSpace: "normal" }}
+          >
+            {comment?.commentText}
+          </div>
+        </div>
       </div>
       <div
         className="d-flex  align-items-center "

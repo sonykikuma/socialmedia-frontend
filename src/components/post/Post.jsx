@@ -372,7 +372,7 @@ const Post = ({ post }) => {
         >
           <div className="d-flex align-items-center" style={{ gap: "8px" }}>
             {isLiked ? (
-              <span onClick={handleLikePost}>
+              <span onClick={handleLikePost} style={{ cursor: "pointer" }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -388,7 +388,7 @@ const Post = ({ post }) => {
                 </svg>
               </span>
             ) : (
-              <span onClick={handleLikePost}>
+              <span onClick={handleLikePost} style={{ cursor: "pointer" }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -401,7 +401,10 @@ const Post = ({ post }) => {
                 </svg>
               </span>
             )}
-            <span onClick={() => setShowComment((prev) => !prev)}>
+            <span
+              onClick={() => setShowComment((prev) => !prev)}
+              style={{ cursor: "pointer" }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

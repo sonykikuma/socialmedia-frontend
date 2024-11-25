@@ -57,10 +57,10 @@ const ProfileCard = () => {
           <hr />
           <div className="d-flex align-items-center justify-content-between">
             <p>
-              Followers:<span>{user?.followers.length}</span>
+              Followers: <span>{user?.followers.length}</span>
             </p>
             <p className="ms-1">
-              Followings:<span>{user?.followings.length}</span>
+              Followings: <span>{user?.followings.length}</span>
             </p>{" "}
           </div>
         </div>
