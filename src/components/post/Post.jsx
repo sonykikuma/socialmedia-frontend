@@ -5,7 +5,6 @@ import { format } from "timeago.js";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import Comment from "../comment/Comment";
 import { bookmarkPost } from "../../features/authSlice";
-// import { updatePost } from "../../features/postSlice";
 
 const Post = ({ post }) => {
   const { token, user } = useSelector((state) => state.auth);
@@ -91,7 +90,6 @@ const Post = ({ post }) => {
 
       if (res.ok) {
         const updatedPost = await res.json();
-        //dispatch(updatePost({ id: post._id, updatedDesc: updatedPost.desc }));
 
         setEditedContent(updatedPost.desc);
         setIsEditing(false);
@@ -163,6 +161,12 @@ const Post = ({ post }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const deleteCommentHandler = (commentId) => {
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment._id !== commentId)
+    );
   };
 
   return (
@@ -315,49 +319,6 @@ const Post = ({ post }) => {
               </div>{" "}
             </div>
           )}
-
-          {/* {showDeleteModal && (
-            <div
-              className="position-absolute d-flex flex-column rounded"
-              style={{
-                right: "1.5rem",
-                top: "2rem",
-                backgroundColor: "#878181",
-                color: "#fff",
-                gap: "8px",
-                padding: "8px",
-              }}
-            >
-              <h3>Delete Post</h3>
-              <div
-                className="d-flex justify-content-center"
-                style={{ gap: "0.75rem" }}
-              >
-                <button
-                  style={{
-                    outline: "none",
-                    border: "none",
-                    padding: "0.2rem 0.4rem",
-                    borderRadius: "6px",
-                  }}
-                  onClick={deletePost}
-                >
-                  Yes
-                </button>
-                <button
-                  style={{
-                    outline: "none",
-                    border: "none",
-                    padding: "0.2rem 0.4rem",
-                    borderRadius: "6px",
-                  }}
-                  onClick={() => setShowDeleteModal((prev) => !prev)}
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          )} */}
         </div>
         {/* editing  feature */}
         <div>
@@ -454,21 +415,6 @@ const Post = ({ post }) => {
             </span>
           </div>
           <div className="d-flex " style={{ gap: "8px" }}>
-            {/* {user._id === post?.user?._id && (
-              <span onClick={() => setIsEditing((prev) => !prev)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-pencil"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                </svg>{" "}
-              </span>
-            )} */}
-
             <div onClick={handleBookmark}>
               {isBookmark ? (
                 <span style={{ cursor: "pointer" }}>
@@ -514,7 +460,11 @@ const Post = ({ post }) => {
             >
               {comments?.length > 0 ? (
                 comments.map((comment) => (
-                  <Comment c={comment} key={comment._id} />
+                  <Comment
+                    c={comment}
+                    key={comment._id}
+                    deleteComment={deleteCommentHandler}
+                  />
                 ))
               ) : (
                 <span style={{ marginLeft: "12px", fontSize: "20px" }}>

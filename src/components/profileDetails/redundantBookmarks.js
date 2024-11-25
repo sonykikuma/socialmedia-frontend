@@ -253,3 +253,26 @@ const ProfileBookmarks = () => {
 };
 
 export default ProfileBookmarks;
+
+// Fetching the profile images for each bookmarked post's user
+// const fetchProfileImages = async () => {
+//   const images = {};
+//   for (const post of data) {
+//     try {
+//       const res = await fetch(
+//         `https://backend-social3.vercel.app/user/find/${post.user}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       const data = await res.json();
+//       images[post._id] = data.profileImg || "defaultProfileImage.jpg";
+//     } catch (error) {
+//       console.error("Error fetching user profile image:", error);
+//     }
+//   }
+//   setProfileImages(images);
+// };
+// fetchProfileImages();

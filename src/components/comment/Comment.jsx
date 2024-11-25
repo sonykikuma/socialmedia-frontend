@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter";
 import { format } from "timeago.js";
 
-const Comment = ({ c }) => {
+const Comment = ({ c, deleteComment }) => {
   const { token, user } = useSelector((state) => state.auth);
   const [comment, setComment] = useState(c);
   const [isLiked, setIsLiked] = useState(comment?.likes?.includes(user._id));
@@ -37,6 +37,21 @@ const Comment = ({ c }) => {
     }
   };
 
+  const handleDeleteComment = async () => {
+    try {
+      await fetch(`https://backend-social3.vercel.app/comment/${comment._id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Make sure to handle token
+        },
+      });
+      // Remove the deleted comment from the state in the parent component
+      deleteComment(comment._id);
+    } catch (error) {
+      console.error("Failed to delete comment:", error);
+    }
+  };
+
   return (
     <div
       className="d-flex align-items-center justify-content-between"
@@ -62,7 +77,7 @@ const Comment = ({ c }) => {
         <div>{comment?.commentText}</div>
       </div>
       <div
-        className="d-flex flex-column align-items-center"
+        className="d-flex  align-items-center "
         style={{ gap: "0.25rem", cursor: "pointer" }}
       >
         {isLiked ? (
@@ -97,8 +112,26 @@ const Comment = ({ c }) => {
           </span>
         )}
         <span>{comment?.likes?.length || 0}</span>
-        <span>likes</span>
+        {/* <span>likes</span> */}
       </div>
+      {comment?.user?._id === user._id && (
+        <span
+          onClick={handleDeleteComment}
+          className=" text-danger "
+          style={{ cursor: "pointer" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash3"
+            viewBox="0 0 16 16"
+          >
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+          </svg>{" "}
+        </span>
+      )}
     </div>
   );
 };

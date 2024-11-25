@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { handleFollow } from "../../features/authSlice";
+import { handleFollow, bookmarkPost } from "../../features/authSlice";
 import { format } from "timeago.js";
-
+//import { bookmarkPost } from "../../features/authSlice";
 import Header from "../navbar/Header";
 import RightSide from "../rightside/RightSide";
 import ProfileCard from "../profileCard/ProfileCard";
@@ -12,9 +12,14 @@ const ProfileBookmarks = () => {
   const { user, token } = useSelector((state) => state.auth);
   const [profile, setProfile] = useState("");
   const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
-  //const [profileImages, setProfileImages] = useState({});
   const [isFollowed, setIsFollowed] = useState(false);
   const [profileData, setProfileData] = useState({});
+  // const [isLiked, setIsLiked] = useState(post?.likes?.includes(user._id));
+  // const [isBookmark, setIsBookmark] = useState(
+  //   user?.bookmarkedPosts?.some(
+  //     (bookmarkedPost) => bookmarkedPost._id == post._id
+  //   )
+  // );
 
   console.log(user);
   const female =
@@ -82,29 +87,6 @@ const ProfileBookmarks = () => {
           setProfileData(profiles);
         };
         fetchProfileData();
-
-        // Fetching the profile images for each bookmarked post's user
-        // const fetchProfileImages = async () => {
-        //   const images = {};
-        //   for (const post of data) {
-        //     try {
-        //       const res = await fetch(
-        //         `https://backend-social3.vercel.app/user/find/${post.user}`,
-        //         {
-        //           headers: {
-        //             Authorization: `Bearer ${token}`,
-        //           },
-        //         }
-        //       );
-        //       const data = await res.json();
-        //       images[post._id] = data.profileImg || "defaultProfileImage.jpg";
-        //     } catch (error) {
-        //       console.error("Error fetching user profile image:", error);
-        //     }
-        //   }
-        //   setProfileImages(images);
-        // };
-        // fetchProfileImages();
       } catch (error) {
         console.error(error);
       }
@@ -112,10 +94,53 @@ const ProfileBookmarks = () => {
     fetchBookmarkedPosts();
   }, [token]);
 
-  const followHandler = async () => {
+  // const followHandler = async () => {
+  //   try {
+  //     fetch(
+  //       `https://backend-social3.vercel.app/user/toggleFollow/${profile?._id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         method: "PUT",
+  //       }
+  //     );
+  //     dispatch(handleFollow(id));
+  //     setProfile((prev) => {
+  //       return {
+  //         ...prev,
+  //         followers: isFollowed
+  //           ? [...prev.followers].filter((id) => id !== user._id)
+  //           : [...prev.followers, user._id],
+  //       };
+  //     });
+  //     setIsFollowed((prev) => !prev);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleLikePost = async () => {
+  //   try {
+  //     await fetch(
+  //       `https://backend-social3.vercel.app/post/toggleLike/${post._id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         method: "PUT",
+  //       }
+  //     );
+  //     setIsLiked((prev) => !prev);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handleBookmark = async (postId) => {
     try {
-      fetch(
-        `https://backend-social3.vercel.app/user/toggleFollow/${profile?._id}`,
+      await fetch(
+        `https://backend-social3.vercel.app/user/bookmark/${post._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -123,18 +148,12 @@ const ProfileBookmarks = () => {
           method: "PUT",
         }
       );
-      dispatch(handleFollow(id));
-      setProfile((prev) => {
-        return {
-          ...prev,
-          followers: isFollowed
-            ? [...prev.followers].filter((id) => id !== user._id)
-            : [...prev.followers, user._id],
-        };
-      });
-      setIsFollowed((prev) => !prev);
-    } catch (error) {
-      console.log(error);
+      dispatch(bookmarkPost(postId));
+      setBookmarkedPosts((prev) => prev.filter((post) => post._id !== postId));
+
+      //setIsBookmark((prev) => !prev);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -271,6 +290,30 @@ const ProfileBookmarks = () => {
                               alt="post"
                             />
                           </div>
+                          {/* Like and Bookmark  */}
+                          {/* <div className="d-flex justify-content-around py-2 border-top">
+                            <button
+                              className="btn btn-outline-primary"
+                              // onClick={() => handleLikePost(post._id)}
+                            >
+                              {/*  {post.isLiked ? "Unlike" : "Like"} 
+                            </button>
+                            <button
+                              className="btn btn-outline-secondary"
+                              onClick={() => handleBookmark(post._id)}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-bookmark-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                              </svg>
+                            </button>
+                          </div> */}
                         </div>
                       </>
                     ))}

@@ -105,12 +105,12 @@ const MyPost = () => {
                 <div className="d-flex flex-column mt-4">
                   {profilePosts.map((post) => (
                     <div key={post._id} className="mb-4">
-                      <Link
+                      {/* <Link
                         to={`/postDetails/${post._id}`}
                         style={{ textDecoration: "none" }}
-                      >
-                        <Post post={post} />
-                      </Link>
+                      > */}
+                      <Post post={post} />
+                      {/* </Link> */}
                     </div>
                   ))}
                 </div>
