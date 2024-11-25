@@ -15,6 +15,7 @@ const MyPost = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const dispatch = useDispatch();
 
+  console.log(user);
   const female =
     "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1200";
 
@@ -90,7 +91,11 @@ const MyPost = () => {
                     {profile?.username}
                   </h4>
                   <h4 style={{ fontWeight: "500" }}>
-                    Bio: {profile?.desc || "Live Love Laugh"}
+                    Bio:{" "}
+                    {profile?.bio && profile.bio.trim()
+                      ? profile.bio
+                      : "Live Love Laugh"}
+                    {/* Bio: {profile?.desc || "Live Love Laugh"} */}
                   </h4>
                 </div>
               </div>

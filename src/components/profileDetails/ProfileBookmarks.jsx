@@ -188,7 +188,7 @@ const ProfileBookmarks = () => {
                     {user?.username}
                   </h4>
                   <h4 style={{ fontWeight: "500" }}>
-                    Bio: {user?.desc || "Live Love Laugh"}
+                    Bio: {user?.bio || "Live Love Laugh"}
                   </h4>
                 </div>
               </div>
