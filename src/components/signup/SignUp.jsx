@@ -48,7 +48,7 @@ const SignUp = () => {
 
   return (
     <main className="container">
-      <div className="d-flex flex-column align-items-center justify-content-center mt-4 min-vh-100">
+      <div className="d-flex flex-column align-items-center justify-content-center mt-4 min-vh-100 ">
         <h2 className="text-primary text-center mb-4">
           Sign Up to be an User here
         </h2>

@@ -70,11 +70,13 @@ const ProfileDetails = () => {
       );
       dispatch(handleFollow(id));
       setProfile((prev) => {
+        const followersArray = prev.followers || []; // Default to empty array
+
         return {
           ...prev,
           followers: isFollowed
-            ? [...prev.followers].filter((id) => id !== user._id)
-            : [...prev.followers, user._id],
+            ? [...followersArray].filter((id) => id !== user._id)
+            : [...followersArray, user._id],
         };
       });
       setIsFollowed((prev) => !prev);

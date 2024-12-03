@@ -15,8 +15,8 @@ const ProfileCard = () => {
   return (
     <>
       <div
-        className="overflow-x-auto container-fluid border rounded-4 d-flex flex-column justify-content-center align-items-center"
-        style={{ backgroundColor: "#f4f4f4" }}
+        className="overflow-x-auto container-fluid  shadow rounded-4 d-flex flex-column justify-content-center align-items-center"
+        //style={{ backgroundColor: "#f4f4f4" }}
       >
         <div
           style={{
@@ -54,7 +54,7 @@ const ProfileCard = () => {
               </p>
             </div>
           </div>
-          <hr />
+          <hr className="mt-0" />
           <div className="d-flex align-items-center justify-content-between">
             <p>
               Followers: <span>{user?.followers.length}</span>

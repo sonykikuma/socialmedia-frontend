@@ -210,6 +210,7 @@ const ProfileBookmarks = () => {
                     {bookmarkedPosts.map((post) => (
                       <>
                         <div
+                          key={post._id}
                           className="rounded border pb-1 overflow-hidden shadow mb-4"
                           style={{ width: "400px" }}
                         >
