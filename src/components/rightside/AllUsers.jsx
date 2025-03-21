@@ -68,9 +68,19 @@ const AllUsers = ({ onFollowChange }) => {
   const showmoreHandler = () => {
     setUsercount((prev) => prev + 2);
   };
-
-  const combinedUsers = [...friends, ...suggestedUsers];
-
+  {
+    /* {Array.isArray(posts) && posts.length > 0 ? ( */
+  }
+  // const combinedUsers = Array.isArray(friends) && [
+  //   ...friends,
+  //   ...suggestedUsers,
+  // ];
+  const combinedUsers =
+    Array.isArray(friends) && Array.isArray(suggestedUsers)
+      ? [...friends, ...suggestedUsers]
+      : [...suggestedUsers];
+  //const combinedUsers = [{...Array.isArray(friends)}, ...suggestedUsers];
+  console.log(combinedUsers);
   const searchedUser = combinedUsers.filter((user) =>
     user.username.toLowerCase().includes(search.toLowerCase())
   );

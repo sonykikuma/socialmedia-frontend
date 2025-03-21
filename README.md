@@ -1,8 +1,22 @@
-# React + Vite
+📌 Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack social media application built using the MEAN stack (MongoDB, Express.js, Angular, Node.js) with Redux for state management. This app allows users to connect, share posts, and interact with others.
 
-Currently, two official plugins are available:
+🚀 Features
+✅ User Authentication (Signup/Login)
+✅ Profile Management (Update Profile)
+✅ Create & Manage Posts
+✅ Like and Bookmark Posts
+✅ Follow/Unfollow Users
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🛠️ Tech Stack
+Frontend: Angular, Redux, Bootstrap
+Backend: Node.js, Express.js
+Database: MongoDB
+Deployment: Vercel
+
+🔧 Setup Instructions
+
+1. Clone the repository:
+2. Install dependencies:
+3. Run the development server:

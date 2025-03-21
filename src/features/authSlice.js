@@ -1,6 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//for bookmarked page posts-unbookmarking from page
+export const updateBookmarks = (postId) => (dispatch, getState) => {
+  const { user } = getState().auth;
+  const updatedBookmarks = user.bookmarkedPosts.filter(
+    (bookmark) => bookmark._id !== postId
+  );
+
+  dispatch({
+    type: "auth/updateBookmarks",
+    payload: { ...user, bookmarkedPosts: updatedBookmarks },
+  });
+};
+
 const initialState = {
   user: null,
   token: null,
@@ -10,30 +23,6 @@ const initialState = {
   // profilePosts: [],
   // isFollowed: false,
 };
-
-// export const fetchProfileById = createAsyncThunk(
-//   "auth/fetchProfileById",
-//   async (id, { rejectWithValue, getState }) => {
-//     try {
-//       console.log("Fetching profile for ID:", id);
-//       if (!id) throw new Error("Invalid user ID");
-//       const token = getState().auth.token;
-
-//       const response = await axios.get(
-//         `https://backend-social3.vercel.app/user/find/${id}`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 export const authSlice = createSlice({
   name: "auth",
@@ -65,41 +54,44 @@ export const authSlice = createSlice({
         state.user.followings.push(action.payload);
       }
     },
-    bookmarkPost(state, action) {
-      if (
-        state.user.bookmarkedPosts.some(
-          (post) => post._id === action.payload._id
-        )
-      ) {
-        state.user.bookmarkedPosts = state.user.bookmarkedPosts.filter(
-          (post) => post._id !== action.payload._id
-        );
-      } else {
-        state.user.bookmarkedPosts.push(action.payload);
-      }
-    },
+    // bookmarkPost(state, action) {
+    //   if (
+    //     state.user.bookmarkedPosts.some(
+    //       (post) => post._id === action.payload._id
+    //     )
+    //   ) {
+    //     state.user.bookmarkedPosts = state.user.bookmarkedPosts.filter(
+    //       (post) => post._id !== action.payload._id
+    //     );
+    //   } else {
+    //     state.user.bookmarkedPosts.push(action.payload);
+    //   }
+    // },
     updateUser(state, action) {
       state.user = action.payload;
     },
+    updateBookmarks: (state, action) => {
+      state.user = action.payload;
+    },
+    bookmarkPost(state, action) {
+      const postId = action.payload._id;
+      const existingIndex = state.user.bookmarkedPosts.findIndex(
+        (post) => post._id === postId
+      );
+
+      if (existingIndex !== -1) {
+        // Remove the post if it's already bookmarked
+        state.user.bookmarkedPosts.splice(existingIndex, 1);
+      } else {
+        // Add the post if it's not bookmarked
+        state.user.bookmarkedPosts.push(action.payload);
+      }
+    },
+
     // setBookmarkedPosts(state, action) {
     //   state.user.bookmarkedPosts = action.payload;
     // },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(fetchProfileById.pending, (state) => {
-  //       state.status = "loading";
-  //       state.error = null;
-  //     })
-  //     .addCase(fetchProfileById.fulfilled, (state, action) => {
-  //       state.status = "success";
-  //       state.user = action.payload;
-  //     })
-  //     .addCase(fetchProfileById.rejected, (state, action) => {
-  //       state.status = "failed";
-  //       state.error = action.payload;
-  //     });
-  // },
 });
 
 export const {
@@ -109,6 +101,5 @@ export const {
   handleFollow,
   bookmarkPost,
   updateUser,
-  setBookmarkedPosts,
 } = authSlice.actions;
 export default authSlice.reducer;

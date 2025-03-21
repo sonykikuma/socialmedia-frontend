@@ -30,9 +30,12 @@ const Posts = ({ refreshPosts }) => {
 
   const sortPosts = (posts) => {
     if (sortType === "date") {
-      return [...posts].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+      console.log("posts", posts);
+      console.log("ppppppp:", typeof posts);
+      //Array.isArray
+      // return [...posts].sort(
+      //     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      //   );
     } else if (sortType === "trending") {
       return [...posts].sort((a, b) => b.likes.length - a.likes.length);
     }
