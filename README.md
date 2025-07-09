@@ -28,7 +28,8 @@ Deployment: Vercel
 
  ## Quick Start
 
-``` git clone https://github.com/sonykikuma/socialmedia-frontend.git
+```
+git clone https://github.com/sonykikuma/socialmedia-frontend.git
 cd <your-repo>
 npm install
 npm run dev```
