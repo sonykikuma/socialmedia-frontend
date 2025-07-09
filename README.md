@@ -28,6 +28,6 @@ Deployment: Vercel
 
  ## Setup Instructions
 
-1. Clone this repository: git clone https://github.com/sonykikuma/socialmedia-frontend.git
+1. Clone this repository:``` git clone https://github.com/sonykikuma/socialmedia-frontend.git```
 2. Install dependencies: npm install
 3. Run the development server: npm run dev
