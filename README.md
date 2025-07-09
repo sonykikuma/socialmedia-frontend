@@ -18,13 +18,13 @@ A full-stack social media application built using the MERN stack (MongoDB, Expre
 ✅ Follow/Unfollow Users
 
  ## Tech Stack
-Frontend: ReactJs, Redux, Bootstrap
+- Frontend: ReactJs, Redux, Bootstrap
 
-Backend: Node.js, Express.js, Cloudinary, jwt token
+- Backend: Node.js, Express.js, Cloudinary, jwt token
 
-Database: MongoDB
+- Database: MongoDB
 
-Deployment: Vercel
+- Deployment: Vercel
 
  ## Quick Start
 
