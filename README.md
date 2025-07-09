@@ -20,7 +20,7 @@ A full-stack social media application built using the MERN stack (MongoDB, Expre
  ## Tech Stack
 - Frontend: ReactJs, Redux, Bootstrap
 
-- Backend: Node.js, Express.js, Cloudinary, jwt token
+- Backend: Node.js, Express.js, Cloudinary, JWT based Authentication
 
 - Database: MongoDB
 
