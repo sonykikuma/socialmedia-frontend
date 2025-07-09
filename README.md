@@ -26,11 +26,9 @@ Database: MongoDB
 
 Deployment: Vercel
 
- ## Setup Instructions
+ ## Quick Start
 
-1. Clone this repository:
-``` git clone https://github.com/sonykikuma/socialmedia-frontend.git```
-2. Install dependencies: 
- ```npm install```
-3. Run the development server:
-``` npm run dev```
+``` git clone https://github.com/sonykikuma/socialmedia-frontend.git
+cd <your-repo>
+npm install
+npm run dev```
