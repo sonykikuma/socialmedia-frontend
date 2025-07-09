@@ -18,12 +18,15 @@ Deployed link: https://socialmedia-frontend-mern.vercel.app
 
 🛠️ Tech Stack
 Frontend: ReactJs, Redux, Bootstrap
+
 Backend: Node.js, Express.js
+
 Database: MongoDB
+
 Deployment: Vercel
 
 🔧 Setup Instructions
 
-1. Clone the repository
-2. Install dependencies
-3. Run the development server
+1. Clone this repository:
+2. Install dependencies:
+3. Run the development server:
