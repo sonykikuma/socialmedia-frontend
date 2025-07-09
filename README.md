@@ -1,11 +1,11 @@
-📌 # Social Media App
+ # Social Media App
 
 A full-stack social media application built using the MERN stack (MongoDB, Express.js, React, Node.js) with Redux for state management. This app allows users to connect, share posts, and interact with others.
 
 ## Demo link
-[Live Demo] (https://socialmedia-frontend-mern.vercel.app)
+[Live Demo](https://socialmedia-frontend-mern.vercel.app)
 
-🚀 ## Features
+ ## Features
 
 ✅ User Authentication (Signup/Login)
 
@@ -17,7 +17,7 @@ A full-stack social media application built using the MERN stack (MongoDB, Expre
 
 ✅ Follow/Unfollow Users
 
-🛠️ ## Tech Stack
+ ## Tech Stack
 Frontend: ReactJs, Redux, Bootstrap
 
 Backend: Node.js, Express.js, Cloudinary, jwt token
@@ -26,7 +26,7 @@ Database: MongoDB
 
 Deployment: Vercel
 
-🔧 ## Setup Instructions
+ ## Setup Instructions
 
 1. Clone this repository: git clone https://github.com/sonykikuma/socialmedia-frontend.git
 2. Install dependencies: npm install
