@@ -32,4 +32,5 @@ A full-stack social media application built using the MERN stack (MongoDB, Expre
 git clone https://github.com/sonykikuma/socialmedia-frontend.git
 cd <your-repo>
 npm install
-npm run dev```
+npm run dev
+```
